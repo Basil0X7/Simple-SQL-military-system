@@ -1,0 +1,51 @@
+CREATE TABLE Equipment (
+    etype CHAR(10),
+    IDeq NUMBER(10),
+    status CHAR(10),
+    PRIMARY KEY (IDeq)
+);
+
+CREATE TABLE Militaryfacility (
+    Mtype CHAR(10),
+    MLocation NUMBER(10),
+    Soldiercapacity NUMBER(10),
+    vehiclecapacity NUMBER(10),
+    PRIMARY KEY (MLocation)
+);
+
+CREATE TABLE Operations (
+    name CHAR(10),
+    Objective CHAR(10),
+    Location NUMBER(10),
+    OperationID NUMBER(10),
+    Datee CHAR(10),
+    PRIMARY KEY (OperationID)
+);
+
+CREATE TABLE Units (
+    name CHAR(10),
+    unitID NUMBER(10),
+    CommanderID NUMBER(10),
+    PRIMARY KEY (unitID),
+    OperationID NUMBER(10),
+    MLocation NUMBER(10),
+    FOREIGN KEY (OperationID) REFERENCES Operations(OperationID),
+    FOREIGN KEY (MLocation) REFERENCES Militaryfacility(MLocation)
+);
+
+CREATE TABLE Soldier (
+    name CHAR(10),
+    Militaryrank CHAR(10),
+    sid NUMBER(10),
+    PRIMARY KEY (sid),
+    unitID NUMBER(10),
+    FOREIGN KEY (unitID) REFERENCES Units(unitID)
+);
+
+CREATE TABLE EquipmentUnit (
+    unitID NUMBER(10),
+    IDeq NUMBER(10),
+    PRIMARY KEY (IDeq, unitID),
+    FOREIGN KEY (unitID) REFERENCES Units(unitID),
+    FOREIGN KEY (IDeq) REFERENCES Equipment(IDeq)
+);
